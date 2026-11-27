@@ -71,7 +71,7 @@
         <span class="flex flex-col leading-tight"><strong class="serif text-xl tracking-[.18em]">和煎</strong><small class="text-[9px] tracking-[.24em] text-[#987560]">HÉ JIĀN · DUMPLINGS</small></span>
       </a>
       <nav class="hidden xl:flex items-center gap-5 2xl:gap-7 text-sm font-medium" aria-label="主選單">
-        <a class="nav-link" href="#story">品牌故事</a><a class="nav-link" href="#menu">熱門餐點</a><a class="nav-link" href="#menu">線上點餐</a><a class="nav-link" href="#gifts">冷凍禮盒</a><a class="nav-link" href="#locations">門市據點</a><a class="nav-link" href="#contact">聯絡我們</a>
+        <a class="nav-link" href="#story">品牌故事</a><a class="nav-link" href="#menu">熱門餐點</a><a class="nav-link" href="#menu">線上點餐</a><a class="nav-link" href="#gifts">冷凍禮盒</a><a class="nav-link" href="#locations">門市據點</a><a class="nav-link" href="#booking">線上預約</a><a class="nav-link" href="#contact">聯絡我們</a>
       </nav>
       <div class="flex gap-2 sm:gap-3 items-center shrink-0">
         <button type="button" class="relative p-2.5 rounded-full hover:bg-cream" id="open-cart" aria-label="開啟購物車，0 件商品"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span id="cart-badge" class="hidden absolute -top-1 -right-1 min-w-[19px] h-[19px] px-1 text-[10px] font-bold text-white bg-terra rounded-full items-center justify-center">0</span></button>
@@ -79,7 +79,7 @@
         <button id="mobile-toggle" type="button" class="xl:hidden p-2.5 rounded-full hover:bg-cream" aria-label="展開導覽選單" aria-expanded="false" aria-controls="mobile-nav"><i data-lucide="menu" class="w-6 h-6"></i></button>
       </div>
     </div>
-    <nav id="mobile-nav" class="xl:hidden hidden border-t border-[#e8dcd0] bg-paper px-5 py-4 shadow-lg" aria-label="行動版選單"><div class="grid grid-cols-2 gap-2 text-sm font-semibold"><a class="py-3" href="#story">品牌故事</a><a class="py-3" href="#menu">熱門餐點</a><a class="py-3" href="#menu">線上點餐</a><a class="py-3" href="#gifts">冷凍禮盒</a><a class="py-3" href="#locations">門市據點</a><a class="py-3" href="#contact">聯絡我們</a></div></nav>
+    <nav id="mobile-nav" class="xl:hidden hidden border-t border-[#e8dcd0] bg-paper px-5 py-4 shadow-lg" aria-label="行動版選單"><div class="grid grid-cols-2 gap-2 text-sm font-semibold"><a class="py-3" href="#story">品牌故事</a><a class="py-3" href="#menu">熱門餐點</a><a class="py-3" href="#menu">線上點餐</a><a class="py-3" href="#gifts">冷凍禮盒</a><a class="py-3" href="#locations">門市據點</a><a class="py-3" href="#booking">線上預約</a><a class="py-3" href="#contact">聯絡我們</a></div></nav>
   </header>
 
   <main>
@@ -119,6 +119,33 @@
     <!-- LOCATIONS -->
     <section id="locations" class="py-20 md:py-28 bg-cream" aria-labelledby="locations-title"><div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12"><div class="text-center mb-12"><p class="eyebrow mb-4">FIND US / 門市據點</p><h2 id="locations-title" class="serif text-3xl sm:text-4xl font-semibold">在城市的一角，等你來坐坐。</h2><p class="text-[#816d60] mt-4 text-sm">以下為示範門市資料，非實際營業店址。</p></div><div class="grid lg:grid-cols-[.85fr_1.15fr] overflow-hidden bg-paper shadow-soft rounded-[6px]"><div class="p-6 sm:p-9 lg:p-11"><div id="store-tabs" class="flex flex-wrap gap-2 mb-9" role="tablist" aria-label="門市選擇"><button type="button" role="tab" aria-selected="true" data-store="0" class="tab-btn px-4 py-2 rounded-full text-sm font-semibold">台北旗艦店</button><button type="button" role="tab" aria-selected="false" data-store="1" class="tab-btn px-4 py-2 rounded-full text-sm font-semibold">信義概念店</button><button type="button" role="tab" aria-selected="false" data-store="2" class="tab-btn px-4 py-2 rounded-full text-sm font-semibold">台中公益店</button></div><div id="store-info" aria-live="polite"></div><div class="border-t border-[#e5d8cb] mt-8 pt-6"><p class="text-xs uppercase tracking-widest text-[#998275] mb-3">外送平台（示意）</p><div class="flex gap-2 flex-wrap"><span class="rounded-full bg-[#eaf7e4] px-4 py-2 text-xs font-bold text-[#3b8137]">Uber Eats</span><span class="rounded-full bg-[#f9e9f1] px-4 py-2 text-xs font-bold text-[#bb3270]">foodpanda</span></div><p class="mt-3 text-[11px] text-[#9a8579]">未串接實際門市及外送平台。</p></div></div><div class="relative min-h-[370px] lg:min-h-[520px] bg-[#e5e6df]"><iframe id="store-map" title="示範門市位置 Google Maps" class="w-full h-full absolute inset-0 border-0" src="https://maps.google.com/maps?q=Taipei%20101%20Taiwan&z=14&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><span class="absolute bottom-4 right-4 px-3 py-2 bg-white/95 rounded text-[11px] text-wood shadow-md pointer-events-none">地圖僅示範地區，非實際門市定位</span></div></div></div></section>
 
+    <!-- BOOKING -->
+    <section id="booking" class="py-20 md:py-28 bg-paper" aria-labelledby="booking-title"><div class="max-w-5xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div class="text-center mb-12"><p class="eyebrow mb-4">RESERVATION / 線上預約</p><h2 id="booking-title" class="serif text-3xl sm:text-4xl font-semibold">留一個位子，等你來吃。</h2><p class="text-[#816d60] mt-4 text-sm">選擇門市、日期與時段即可預約，可預約未來 14 天內的座位。</p></div>
+      <div class="grid lg:grid-cols-[1.25fr_.75fr] gap-8 items-start">
+        <form id="booking-form" class="bg-cream rounded-lg p-6 sm:p-8 shadow-soft space-y-5" novalidate>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div><label for="bk-store" class="block font-semibold text-sm mb-2">門市 *</label><select id="bk-store" class="w-full border border-[#dccbbb] rounded-lg px-4 py-3 bg-white"></select></div>
+            <div><label for="bk-party" class="block font-semibold text-sm mb-2">人數 *</label><select id="bk-party" class="w-full border border-[#dccbbb] rounded-lg px-4 py-3 bg-white"></select></div>
+          </div>
+          <div><label for="bk-date" class="block font-semibold text-sm mb-2">日期 *</label><input id="bk-date" type="date" required class="w-full border border-[#dccbbb] rounded-lg px-4 py-3 bg-white"/><p id="bk-date-hint" class="text-xs text-[#9a8579] mt-2" aria-live="polite"></p></div>
+          <fieldset><legend class="block font-semibold text-sm mb-2">時段 *</legend><div id="bk-slots" class="grid grid-cols-3 sm:grid-cols-4 gap-2" role="radiogroup" aria-label="可預約時段"></div><p id="bk-slot-hint" class="text-xs text-[#9a8579] mt-2" aria-live="polite"></p></fieldset>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div><label for="bk-name" class="block font-semibold text-sm mb-2">姓名 *</label><input id="bk-name" type="text" required maxlength="30" autocomplete="name" class="w-full border border-[#dccbbb] rounded-lg px-4 py-3 bg-white"/></div>
+            <div><label for="bk-phone" class="block font-semibold text-sm mb-2">手機 *</label><input id="bk-phone" type="tel" required pattern="09[0-9]{8}" placeholder="0912345678" autocomplete="tel" class="w-full border border-[#dccbbb] rounded-lg px-4 py-3 bg-white"/></div>
+          </div>
+          <div><label for="bk-note" class="block font-semibold text-sm mb-2">備註（選填）</label><input id="bk-note" type="text" maxlength="120" placeholder="例如：兒童座椅、慶生" class="w-full border border-[#dccbbb] rounded-lg px-4 py-3 bg-white"/></div>
+          <p id="bk-error" class="text-sm text-[#b3261e] hidden" role="alert"></p>
+          <button type="submit" class="btn btn-primary w-full">確認預約 <i data-lucide="calendar-check" class="w-4 h-4"></i></button>
+        </form>
+        <aside class="space-y-5">
+          <div id="bk-success" class="hidden bg-[#eef4e6] border border-[#cfdcbc] rounded-lg p-6" aria-live="polite"><p class="eyebrow mb-2">預約成功</p><p class="serif text-xl font-semibold mb-3">期待與您見面！</p><p class="text-sm leading-7">預約編號：<strong id="bk-number"></strong><br/><span id="bk-summary"></span></p><div class="flex flex-wrap gap-2 mt-4"><a id="bk-ics" class="btn btn-outline !py-2 !px-4 text-sm" href="#">加入行事曆 (.ics)</a><button type="button" id="bk-again" class="btn btn-outline !py-2 !px-4 text-sm">再預約一筆</button></div></div>
+          <div class="bg-cream rounded-lg p-6"><h3 class="serif text-lg font-semibold mb-3">我的預約</h3><div id="bk-list" class="space-y-3 text-sm" aria-live="polite"></div></div>
+          <div class="bg-wood text-cream rounded-lg p-6"><h3 class="serif text-lg font-semibold mb-2">也可使用 Google 行事曆預約</h3><p class="text-sm text-white/70 leading-7 mb-4">想直接在 Google 行事曆預約時段，可前往預約頁面。</p><a class="btn btn-primary !bg-tangerine text-sm" href="https://calendar.app.google/brNiAEidbtCtgpFh6" target="_blank" rel="noopener noreferrer">前往 Google 預約頁 <i data-lucide="external-link" class="w-4 h-4"></i></a></div>
+        </aside>
+      </div>
+    </section>
+
     <!-- FAQ -->
     <section id="faq" class="py-20 md:py-24 bg-paper" aria-labelledby="faq-title"><div class="max-w-4xl mx-auto px-5 sm:px-8"><div class="text-center mb-11"><p class="eyebrow mb-4">GOOD TO KNOW / 常見問題</p><h2 id="faq-title" class="serif text-3xl sm:text-4xl font-semibold">你想知道的，我們都準備好了。</h2></div><div id="faq-list" class="border-t border-[#e5d9cd]"></div></div></section>
 
@@ -127,7 +154,7 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="bg-[#302119] text-white/75 py-12"><div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12"><div class="flex flex-col md:flex-row md:justify-between gap-10"><div><p class="serif text-3xl text-cream tracking-[.2em] font-semibold">和煎</p><p class="text-xs tracking-[.2em] mt-2">HÉ JIĀN · DUMPLINGS</p><p class="max-w-[280px] text-sm leading-7 mt-5 text-white/55">有一種幸福，來自熱騰騰的好滋味。</p></div><div class="grid sm:grid-cols-2 gap-10 text-sm"><div><p class="text-cream font-semibold mb-4">快速連結</p><div class="flex flex-col gap-3"><a class="hover:text-white" href="#story">品牌故事</a><a class="hover:text-white" href="#menu">精選菜單</a><a class="hover:text-white" href="#gifts">冷凍禮盒</a><a class="hover:text-white" href="#locations">門市據點</a><a class="hover:text-white" href="#faq">常見問題</a></div></div><div><p class="text-cream font-semibold mb-4">聯絡我們</p><p class="text-white/55 leading-7">示範品牌官方網站<br/>客服信箱：hello@example.com<br/>服務時間：週一至週五 10:00–18:00</p><div class="flex gap-3 mt-4"><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram 平台首頁（非官方帳號）" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-white/10"><i data-lucide="instagram" class="w-5 h-5"></i></a><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook 平台首頁（非官方帳號）" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-white/10"><i data-lucide="facebook" class="w-5 h-5"></i></a><a href="https://line.me/" target="_blank" rel="noopener noreferrer" aria-label="LINE 平台首頁（非官方帳號）" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-white/10"><i data-lucide="message-circle" class="w-5 h-5"></i></a></div></div></div></div><div class="border-t border-white/15 mt-10 pt-6 flex flex-col sm:flex-row sm:justify-between gap-3 text-xs text-white/45"><p>© <span id="year"></span> HÉ JIĀN. All rights reserved. 本站為功能示範。</p><button id="privacy-btn" type="button" class="text-left hover:text-white">隱私權政策（示範）</button></div></div></footer>
+  <footer class="bg-[#302119] text-white/75 py-12"><div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12"><div class="flex flex-col md:flex-row md:justify-between gap-10"><div><p class="serif text-3xl text-cream tracking-[.2em] font-semibold">和煎</p><p class="text-xs tracking-[.2em] mt-2">HÉ JIĀN · DUMPLINGS</p><p class="max-w-[280px] text-sm leading-7 mt-5 text-white/55">有一種幸福，來自熱騰騰的好滋味。</p></div><div class="grid sm:grid-cols-2 gap-10 text-sm"><div><p class="text-cream font-semibold mb-4">快速連結</p><div class="flex flex-col gap-3"><a class="hover:text-white" href="#story">品牌故事</a><a class="hover:text-white" href="#menu">精選菜單</a><a class="hover:text-white" href="#gifts">冷凍禮盒</a><a class="hover:text-white" href="#locations">門市據點</a><a class="hover:text-white" href="#booking">線上預約</a><a class="hover:text-white" href="#faq">常見問題</a></div></div><div><p class="text-cream font-semibold mb-4">聯絡我們</p><p class="text-white/55 leading-7">示範品牌官方網站<br/>客服信箱：hello@example.com<br/>服務時間：週一至週五 10:00–18:00</p><div class="flex gap-3 mt-4"><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram 平台首頁（非官方帳號）" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-white/10"><i data-lucide="instagram" class="w-5 h-5"></i></a><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook 平台首頁（非官方帳號）" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-white/10"><i data-lucide="facebook" class="w-5 h-5"></i></a><a href="https://line.me/" target="_blank" rel="noopener noreferrer" aria-label="LINE 平台首頁（非官方帳號）" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-white/10"><i data-lucide="message-circle" class="w-5 h-5"></i></a></div></div></div></div><div class="border-t border-white/15 mt-10 pt-6 flex flex-col sm:flex-row sm:justify-between gap-3 text-xs text-white/45"><p>© <span id="year"></span> HÉ JIĀN. All rights reserved. 本站為功能示範。</p><button id="privacy-btn" type="button" class="text-left hover:text-white">隱私權政策（示範）</button></div></div></footer>
 
   <!-- CART DRAWER -->
   <div id="cart-overlay" class="drawer-overlay fixed inset-0 z-[60] hidden" aria-hidden="true"></div>
@@ -238,6 +265,72 @@
       // CDN script is deferred and may finish after DOMContentLoaded; render icons once loaded.
       if(!window.lucide){window.addEventListener('load',refreshIcons,{once:true})}
     });
+
+    // ---- Booking system (front-end demo: bookings are kept in this browser's localStorage) ----
+    const BK_KEY='he-jian-bookings-v1', BK_DAYS=14, BK_CAP=3;
+    const BK_HOURS=[{open:'11:00',close:'21:00',closed:[]},{open:'11:30',close:'21:30',closed:[]},{open:'11:00',close:'20:30',closed:[1]}];
+    const bkLoad=()=>{try{const v=JSON.parse(localStorage.getItem(BK_KEY)||'[]');return Array.isArray(v)?v:[]}catch(e){return[]}};
+    const bkSave=l=>{try{localStorage.setItem(BK_KEY,JSON.stringify(l))}catch(e){}};
+    const pad=n=>String(n).padStart(2,'0');
+    const ymd=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    const toMin=t=>{const [h,m]=t.split(':').map(Number);return h*60+m};
+    const fromMin=m=>`${pad(Math.floor(m/60))}:${pad(m%60)}`;
+    let bkSlot='';
+    function bkSlotsFor(store,dateStr){
+      const h=BK_HOURS[store];const d=new Date(dateStr+'T00:00:00');if(isNaN(d)||h.closed.includes(d.getDay()))return[];
+      const out=[];const now=new Date();const isToday=dateStr===ymd(now);const nowMin=now.getHours()*60+now.getMinutes()+60;
+      for(let m=toMin(h.open);m<=toMin(h.close)-60;m+=30){if(isToday&&m<nowMin)continue;out.push(fromMin(m))}
+      return out;
+    }
+    function bkRenderSlots(){
+      const store=Number($('#bk-store').value),date=$('#bk-date').value,box=$('#bk-slots'),hint=$('#bk-slot-hint');
+      bkSlot='';const slots=bkSlotsFor(store,date);const list=bkLoad();
+      if(!date){box.innerHTML='';hint.textContent='請先選擇日期。';return}
+      if(!slots.length){box.innerHTML='';hint.textContent='此日期未營業或今日已無可預約時段，請改選其他日期。';return}
+      hint.textContent='';
+      box.innerHTML=slots.map(t=>{const used=list.filter(b=>b.store===store&&b.date===date&&b.time===t).length;const full=used>=BK_CAP;
+        return `<button type="button" role="radio" aria-checked="false" data-time="${t}" ${full?'disabled':''} class="bk-slot tab-btn rounded-lg px-3 py-2.5 text-sm font-semibold ${full?'opacity-40 cursor-not-allowed line-through':''}">${t}</button>`}).join('');
+    }
+    function bkRenderList(){
+      const today=ymd(new Date());const list=bkLoad().filter(b=>b.date>=today).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+      $('#bk-list').innerHTML=list.length?list.map(b=>`<div class="flex items-start justify-between gap-3 border-b border-[#e5d8cb] pb-3"><div><p class="font-semibold">${esc(b.date)} ${esc(b.time)}｜${b.party} 位</p><p class="text-xs text-[#816d60]">${esc(STORES[b.store].name)}・${esc(b.number)}</p></div><button type="button" class="bk-cancel text-xs text-terra font-bold shrink-0" data-number="${esc(b.number)}" aria-label="取消預約 ${esc(b.number)}">取消</button></div>`).join(''):'<p class="text-[#816d60]">目前沒有預約紀錄。</p>';
+    }
+    function bkIcs(b){
+      const [y,mo,d]=b.date.split('-'),[h,mi]=b.time.split(':');const end=fromMin(toMin(b.time)+60).split(':');
+      const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//HE JIAN//Booking//ZH','BEGIN:VEVENT',`UID:${b.number}@hejian`,`DTSTAMP:${new Date().toISOString().replace(/[-:]|\.\d+/g,'')}`,`DTSTART:${y}${mo}${d}T${h}${mi}00`,`DTEND:${y}${mo}${d}T${end[0]}${end[1]}00`,`SUMMARY:和煎 預約 ${b.party} 位`,`LOCATION:${STORES[b.store].name}`,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+      return 'data:text/calendar;charset=utf-8,'+encodeURIComponent(ics);
+    }
+    function bkInit(){
+      const form=$('#booking-form');if(!form)return;
+      $('#bk-store').innerHTML=STORES.map((s,i)=>`<option value="${i}">${esc(s.name)}</option>`).join('');
+      $('#bk-party').innerHTML=Array.from({length:8},(_,i)=>`<option value="${i+1}" ${i===1?'selected':''}>${i+1} 位</option>`).join('');
+      const today=new Date(),max=new Date();max.setDate(max.getDate()+BK_DAYS);
+      const di=$('#bk-date');di.min=ymd(today);di.max=ymd(max);di.value=ymd(today);
+      const hint=()=>{const h=BK_HOURS[Number($('#bk-store').value)];$('#bk-date-hint').textContent=`營業時間 ${h.open}–${h.close}${h.closed.length?'（週一公休）':''}，每個時段保留 1 小時。`};
+      hint();bkRenderSlots();bkRenderList();
+      $('#bk-store').addEventListener('change',()=>{hint();bkRenderSlots()});di.addEventListener('change',bkRenderSlots);
+      $('#bk-slots').addEventListener('click',e=>{const b=e.target.closest('.bk-slot');if(!b||b.disabled)return;bkSlot=b.dataset.time;$$('.bk-slot').forEach(x=>{const on=x===b;x.setAttribute('aria-checked',String(on));x.setAttribute('aria-selected',String(on))})});
+      $('#bk-list').addEventListener('click',e=>{const b=e.target.closest('.bk-cancel');if(!b)return;bkSave(bkLoad().filter(x=>x.number!==b.dataset.number));bkRenderList();bkRenderSlots();toast('已取消預約')});
+      $('#bk-again').addEventListener('click',()=>{$('#bk-success').classList.add('hidden');form.classList.remove('hidden')});
+      form.addEventListener('submit',e=>{
+        e.preventDefault();const err=$('#bk-error');err.classList.add('hidden');
+        const store=Number($('#bk-store').value),date=di.value,name=$('#bk-name').value.trim(),phone=$('#bk-phone').value.trim(),party=Number($('#bk-party').value);
+        const fail=m=>{err.textContent=m;err.classList.remove('hidden')};
+        if(!date||date<ymd(today)||date>ymd(max))return fail('請選擇 14 天內的有效日期。');
+        if(!bkSlot||!bkSlotsFor(store,date).includes(bkSlot))return fail('請選擇預約時段。');
+        if(!name)return fail('請輸入姓名。');
+        if(!/^09\d{8}$/.test(phone))return fail('請輸入正確的手機號碼（例如 0912345678）。');
+        const list=bkLoad();
+        if(list.filter(b=>b.store===store&&b.date===date&&b.time===bkSlot).length>=BK_CAP){bkRenderSlots();return fail('此時段剛被預約額滿，請改選其他時段。')}
+        const b={number:`BK-${date.replaceAll('-','')}-${Math.floor(Math.random()*9000+1000)}`,store,date,time:bkSlot,party,name,phone,note:$('#bk-note').value.trim()};
+        list.push(b);bkSave(list);
+        $('#bk-number').textContent=b.number;$('#bk-summary').textContent=`${STORES[store].name}｜${date} ${bkSlot}｜${party} 位｜${name}`;
+        $('#bk-ics').href=bkIcs(b);$('#bk-ics').setAttribute('download',`${b.number}.ics`);
+        $('#bk-success').classList.remove('hidden');form.reset();di.value=ymd(today);$('#bk-party').value='2';bkRenderSlots();bkRenderList();refreshIcons();
+        $('#bk-success').scrollIntoView({behavior:'smooth',block:'nearest'});toast('預約成功！');
+      });
+    }
+    document.addEventListener('DOMContentLoaded',bkInit);
   </script>
 </body>
 </html>
