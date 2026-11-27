@@ -385,34 +385,67 @@
       const SHOP_W=7,SHOP_H=3.9;let shopX=0;const DOOR_Z=.9;
       const shop=new T.Group();scene.add(shop);
       const add=(geo,mat,x,y,z,parent=shop)=>{const m=new T.Mesh(geo,mat);m.position.set(x,y,z);parent.add(m);return m};
-      add(new T.BoxGeometry(SHOP_W,SHOP_H,3),lam(0xf0dcc0),0,SHOP_H/2,-1.5);
-      add(new T.BoxGeometry(SHOP_W+.3,.25,3.2),lam(0x533528),0,SHOP_H+.12,-1.5);
-      add(new T.BoxGeometry(1.5,2.3,.12),basic(0xffcf85),0,1.15,.02);            // glowing door
-      add(new T.BoxGeometry(1.8,2.5,.08),lam(0x533528),0,1.25,-.02);
-      [-2.3,2.3].forEach(x=>{add(new T.BoxGeometry(1.7,1.4,.1),basic(0xffe0a8,{transparent:true,opacity:.85}),x,1.75,.02);add(new T.BoxGeometry(1.9,1.6,.07),lam(0x533528),x,1.75,-.03)});
-      for(let i=0;i<7;i++){const a=add(new T.BoxGeometry(SHOP_W/7,.12,1.3),lam(i%2?0xfff4e4:0xb95c35),(i-3)*SHOP_W/7,2.95-.0,.65);a.rotation.x=.32}
-      const cv=document.createElement('canvas');cv.width=512;cv.height=160;const cx=cv.getContext('2d');
-      cx.fillStyle='#533528';cx.fillRect(0,0,512,160);cx.fillStyle='#f7f1e6';cx.font='700 84px "Noto Serif TC",serif';cx.textAlign='center';cx.textBaseline='middle';cx.fillText('和煎',256,70);cx.font='600 22px sans-serif';cx.fillText('HÉ JIĀN · DUMPLINGS',256,132);
-      add(new T.PlaneGeometry(3.4,1.06),new T.MeshBasicMaterial({map:new T.CanvasTexture(cv)}),0,SHOP_H-.02+.0,.05).position.y=3.45;
-      const ground=add(new T.PlaneGeometry(80,9),basic(0x1f140e,{transparent:true,opacity:.6}),0,0,2.2,scene);ground.rotation.x=-Math.PI/2;
+      const sph=(r,mat,x,y,z,sx=1,sy=1,sz=1,parent=shop)=>{const m=add(new T.SphereGeometry(r,20,16),mat,x,y,z,parent);m.scale.set(sx,sy,sz);return m};
+      const disc=(r,d,mat,x,y,z,parent=shop)=>{const m=add(new T.CylinderGeometry(r,r,d,28),mat,x,y,z,parent);m.rotation.x=Math.PI/2;return m};
+      const CREAM=0xfff0dc,PEACH=0xffd9bf,TERRA=0xe8784a,BROWN=0x6b4331;
+      add(new T.BoxGeometry(SHOP_W,SHOP_H,3),lam(CREAM),0,SHOP_H/2,-1.5);
+      sph(1,lam(TERRA),0,SHOP_H,-1.2,SHOP_W/2+.35,.7,1.9);                     // round roof
+      // round-top door + glow
+      add(new T.BoxGeometry(1.5,1.6,.1),basic(0xffd48f),0,.8,.03);disc(.75,.1,basic(0xffd48f),0,1.6,.03);
+      add(new T.BoxGeometry(1.8,1.6,.06),lam(BROWN),0,.8,-.01);disc(.9,.06,lam(BROWN),0,1.6,-.01);
+      add(new T.SphereGeometry(.09,10,8),basic(0xfff4e4),.5,1.0,.12);
+      // round porthole windows with flower boxes
+      [-2.3,2.3].forEach(x=>{disc(.72,.08,basic(0xffe6b8,{transparent:true,opacity:.92}),x,1.95,.04);disc(.86,.06,lam(BROWN),x,1.95,-.01);
+        add(new T.BoxGeometry(1.7,.3,.4),lam(0xb97a52),x,1.0,.28);[-.5,0,.5].forEach((o,i)=>sph(.2,basic([0xff8fa3,0xffd36e,0xffffff][i]),x+o,1.25,.3));});
+      // scalloped candy awning
+      for(let i=0;i<7;i++){const w=SHOP_W/7,c=i%2?0xfff8ec:TERRA;const a=add(new T.BoxGeometry(w,.12,1.3),lam(c),(i-3)*w,2.95,.65);a.rotation.x=.32;sph(w/2,lam(c),(i-3)*w,2.72,1.28,1,.62,.9)}
+      // sign
+      const cv=document.createElement('canvas');cv.width=512;cv.height=170;const cx=cv.getContext('2d');
+      cx.fillStyle='#6b4331';cx.beginPath();cx.roundRect?cx.roundRect(0,0,512,170,60):cx.rect(0,0,512,170);cx.fill();
+      cx.fillStyle='#fff0dc';cx.font='700 86px "Noto Serif TC",serif';cx.textAlign='center';cx.textBaseline='middle';cx.fillText('和煎',256,68);cx.font='600 22px sans-serif';cx.fillText('♡ HÉ JIĀN · DUMPLINGS ♡',256,136);
+      const signM=add(new T.PlaneGeometry(3.3,1.1),new T.MeshBasicMaterial({map:new T.CanvasTexture(cv),transparent:true}),0,3.4,1.0);
+      // paper lanterns
+      const lant=[-1.5,1.5].map(x=>{const g=new T.Group();g.position.set(x,2.5,1.0);shop.add(g);add(new T.CylinderGeometry(.015,.015,.3,6),lam(BROWN),0,.15,0,g);sph(.24,basic(0xff7a59),0,-.12,0,1,1.15,1,g);add(new T.CylinderGeometry(.1,.1,.06,10),basic(0xffd36e),0,.04,0,g);add(new T.CylinderGeometry(.1,.1,.06,10),basic(0xffd36e),0,-.3,0,g);return g});
+      // mascot dumpling on the roof
+      const mas=new T.Group();mas.position.set(0,SHOP_H+.75,.0);shop.add(mas);
+      sph(.58,lam(0xfffaf0),0,0,0,1.25,.85,.9,mas);
+      for(let i=-2;i<=2;i++)sph(.09,lam(0xffeccd),i*.2,.5-Math.abs(i)*.04,0,1,1,1.4,mas);
+      sph(.07,basic(0x3a2a24),-.22,.04,.72,1,1.3,.6,mas);sph(.07,basic(0x3a2a24),.22,.04,.72,1,1.3,.6,mas);
+      sph(.1,basic(0xffa6b3),-.4,-.12,.66,1.2,.7,.4,mas);sph(.1,basic(0xffa6b3),.4,-.12,.66,1.2,.7,.4,mas);
+      sph(.045,basic(0xe0707f),0,-.1,.74,1.8,.9,.5,mas);
+      // bamboo steamer with steam puffs
+      const st=new T.Group();st.position.set(-3.0,0,1.2);shop.add(st);
+      [0,1,2].forEach(i=>{add(new T.CylinderGeometry(.5,.5,.3,20),lam(0xe8c27a),0,.17+i*.32,0,st);add(new T.CylinderGeometry(.52,.52,.05,20),lam(0xc99a4f),0,.05+i*.32+.3,0,st)});
+      sph(.4,lam(0xe8c27a),0,1.32,0,1,.5,1,st);sph(.09,lam(0xc99a4f),0,1.52,0,st);
+      const puffs=Array.from({length:7},(_,i)=>{const m=sph(.3,new T.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0}),-3.0,1.7,1.2);m.userData.o=i/7;return m});
+      // potted bushes
+      [3.1,-3.55].forEach((x,i)=>{add(new T.CylinderGeometry(.32,.26,.4,14),lam(0xd98c5f),x,.2,1.0);sph(.42,lam(i?0x8fd19a:0x7fc98c),x,.72,1.0,1,.9,1);sph(.12,basic(0xff8fa3),x+.15,.95,1.3)});
+      const ground=add(new T.PlaneGeometry(80,9),basic(0x3a2218,{transparent:true,opacity:.5}),0,0,2.2,scene);ground.rotation.x=-Math.PI/2;
       const curb=add(new T.BoxGeometry(80,.12,.18),basic(0xdc9a62,{transparent:true,opacity:.55}),0,.06,6.5,scene);
       // --- people ---
-      const SHIRTS=[0xdc7b43,0xb95c35,0x7d8566,0xf0bc87,0x6d8fa8,0xc2564f,0xe9d9b8,0x8a6a9a],SKIN=[0xf3c9a2,0xd9a578,0xa9744f,0x7a4d33],PANTS=[0x2a1b14,0x3a2a44,0x24343f,0x4a3022];
+      const SHIRTS=[0xffb38a,0xff8fa3,0xffd36e,0x9fd8b0,0x8fc7ff,0xc9a7ff,0xfff1c9,0xff9f7a],SKIN=[0xffe0c8,0xf8cfae,0xe2b08a,0xb98058],PANTS=[0x6b4f7a,0x54648a,0x7a5a45,0x4a6a5a],HAIR=[0x2b1d16,0x5a3a22,0x8a5a32,0xf0c36a,0x3a3a55];
       const pick=a=>a[Math.floor(Math.random()*a.length)];
       function person(){
-        const m={shirt:lam(pick(SHIRTS)),skin:lam(pick(SKIN)),pants:lam(pick(PANTS))};Object.values(m).forEach(x=>x.transparent=true);
-        const g=new T.Group(),h=.92+Math.random()*.2;
-        const limb=(w,l,mat,x,y)=>{const geo=new T.BoxGeometry(w,l,w);geo.translate(0,-l/2,0);const mesh=new T.Mesh(geo,mat);mesh.position.set(x,y,0);g.add(mesh);return mesh};
-        const legL=limb(.17,.78,m.pants,-.12,.78),legR=limb(.17,.78,m.pants,.12,.78);
-        const torso=new T.Mesh(new T.CylinderGeometry(.27,.3,.78,10),m.shirt);torso.position.y=1.17;g.add(torso);
-        const armL=limb(.12,.64,m.shirt,-.36,1.5),armR=limb(.12,.64,m.shirt,.36,1.5);
-        const head=new T.Mesh(new T.SphereGeometry(.2,14,12),m.skin);head.position.y=1.74;g.add(head);
-        const hair=new T.Mesh(new T.SphereGeometry(.21,14,12,0,Math.PI*2,0,Math.PI*.55),lam(pick([0x1b130f,0x3a261b,0x5a3a22])));hair.position.y=1.76;hair.material.transparent=true;g.add(hair);
-        if(Math.random()<.45){const bag=new T.Mesh(new T.BoxGeometry(.3,.34,.12),lam(pick([0xdc7b43,0xfff4e4,0x7d8566])));bag.material.transparent=true;bag.position.set(.34,.7,.1);g.add(bag);m.bag=bag.material}
+        const m={shirt:lam(pick(SHIRTS)),skin:lam(pick(SKIN)),pants:lam(pick(PANTS)),hair:lam(pick(HAIR)),eye:basic(0x2a1b14),cheek:basic(0xff9fb0)};
+        Object.values(m).forEach(x=>x.transparent=true);
+        const g=new T.Group(),h=.95+Math.random()*.2;
+        const S=(r,mat,x,y,z,sx=1,sy=1,sz=1,par=g)=>{const o=new T.Mesh(new T.SphereGeometry(r,16,12),mat);o.position.set(x,y,z);o.scale.set(sx,sy,sz);par.add(o);return o};
+        const pivot=(x,y)=>{const q=new T.Group();q.position.set(x,y,0);g.add(q);return q};
+        const legL=pivot(-.13,.42),legR=pivot(.13,.42);[legL,legR].forEach(q=>{S(.12,m.pants,0,-.12,0,1,1.4,1,q);S(.13,m.hair,0,-.3,.05,1,.7,1.3,q)});
+        S(.34,m.shirt,0,.66,0,1.05,1,.95);                                   // round body
+        const armL=pivot(-.34,.82),armR=pivot(.34,.82);[armL,armR].forEach(q=>S(.1,m.skin,0,-.14,0,1,1.35,1,q));
+        S(.46,m.skin,0,1.36,0);                                              // big head
+        const cap=S(.485,m.hair,0,1.4,-.05,1,1,1);cap.geometry=new T.SphereGeometry(.485,16,12,0,Math.PI*2,0,Math.PI*.5);
+        S(.07,m.eye,-.17,1.34,.43,1,1.35,.6);S(.07,m.eye,.17,1.34,.43,1,1.35,.6);
+        S(.09,m.cheek,-.3,1.22,.38,1.2,.7,.4);S(.09,m.cheek,.3,1.22,.38,1.2,.7,.4);
+        const acc=Math.random();
+        if(acc<.28){S(.15,m.hair,-.36,1.74,0,1,1,.7);S(.15,m.hair,.36,1.74,0,1,1,.7)}      // bear ears
+        else if(acc<.5){S(.17,m.hair,0,1.86,0)}                                           // bun
+        else if(acc<.65){m.bag=basic(pick([0xff7a59,0xffd36e,0x7fc98c]));m.bag.transparent=true;S(.2,m.bag,0,1.8,0,1.1,.75,1.1)} // little hat
         g.scale.setScalar(h);scene.add(g);
         return {g,m,legL,legR,armL,armR,state:'walk',phase:Math.random()*6,speed:1,dir:1,lane:3,kind:'pass',t:0,fade:1};
       }
-      const setFade=(p,v)=>{p.fade=v;[p.m.shirt,p.m.skin,p.m.pants,p.m.bag].forEach(x=>{if(x)x.opacity=v});p.g.visible=v>.01};
+      const setFade=(p,v)=>{p.fade=v;Object.values(p.m).forEach(x=>{x.opacity=v});p.g.visible=v>.01};
       let halfW=14;
       function spawn(p,first){
         const r=Math.random();p.kind=r<.45?'visit':r<.7?'exit':'pass';p.speed=1.1+Math.random()*.9;p.lane=1.9+Math.random()*2.3;p.dir=Math.random()<.5?1:-1;
@@ -424,7 +457,7 @@
       const lerpAng=(a,b,k)=>{let d=((b-a+Math.PI*3)%(Math.PI*2))-Math.PI;return a+d*k};
       function step(p,dt){
         const g=p.g;p.phase+=dt*p.speed*4.2;const sw=Math.sin(p.phase),moving=p.state!=='wait'&&p.state!=='inside';
-        if(moving){p.legL.rotation.x=sw*.7;p.legR.rotation.x=-sw*.7;p.armL.rotation.x=-sw*.6;p.armR.rotation.x=sw*.6;g.position.y=Math.abs(Math.cos(p.phase))*.06}
+        if(moving){p.legL.rotation.x=sw*.8;p.legR.rotation.x=-sw*.8;p.armL.rotation.x=-sw*.9;p.armR.rotation.x=sw*.9;g.position.y=Math.abs(Math.cos(p.phase))*.13;g.rotation.z=sw*.06}
         if(p.state==='walk'){
           const ty=p.dir>0?Math.PI/2:-Math.PI/2;g.rotation.y=lerpAng(g.rotation.y,ty,Math.min(1,dt*8));
           p.x+=p.dir*p.speed*dt;g.position.x=p.x;g.position.z=p.z;
@@ -444,13 +477,13 @@
       }
       function resize(){
         const w=box.clientWidth||1,h=box.clientHeight||1,asp=w/h;renderer.setSize(w,h,false);camera.aspect=asp;
-        const needH=6.4,needW=17,vis=Math.max(needH,needW/asp),dist=vis/(2*Math.tan(T.MathUtils.degToRad(camera.fov/2)));
+        const needH=8.6,needW=17,vis=Math.max(needH,needW/asp),dist=vis/(2*Math.tan(T.MathUtils.degToRad(camera.fov/2)));
         halfW=Math.max(10,(vis*asp)/2+1);shopX=asp>2.6?Math.min(6,halfW*.25):0;shop.position.x=shopX;doorLight.position.set(shopX,1.6,2.2);
-        camera.position.set(shopX*.4,3.2,dist+1.5);camera.lookAt(shopX*.4,2.1,1.5);camera.updateProjectionMatrix();
+        camera.position.set(shopX*.4,3.2,dist+1.5);camera.lookAt(shopX*.4,2.5,1.5);camera.updateProjectionMatrix();
       }
       new ResizeObserver(resize).observe(box);resize();
       let last=performance.now(),running=true,raf=0;
-      function frame(now){raf=requestAnimationFrame(frame);const dt=Math.min(.05,(now-last)/1000);last=now;people.forEach(p=>step(p,dt));renderer.render(scene,camera)}
+      function frame(now){raf=requestAnimationFrame(frame);const dt=Math.min(.05,(now-last)/1000);last=now;people.forEach(p=>step(p,dt));const tt=now/1000;puffs.forEach(m=>{const k=(tt*.35+m.userData.o)%1;m.position.set(-3.0+Math.sin(k*6+m.userData.o*9)*.25,1.7+k*2.2,1.2);m.scale.setScalar(.5+k*1.1);m.material.opacity=.75*(1-k)*Math.min(1,k*6)});lant.forEach((l,i)=>l.rotation.z=Math.sin(tt*1.6+i*2)*.1);mas.position.y=SHOP_H+.75+Math.sin(tt*2)*.07;mas.rotation.z=Math.sin(tt*1.3)*.06;renderer.render(scene,camera)}
       const setRun=on=>{if(on&&!running){running=true;last=performance.now();raf=requestAnimationFrame(frame)}else if(!on&&running){running=false;cancelAnimationFrame(raf)}};
       raf=requestAnimationFrame(frame);
       new IntersectionObserver(es=>setRun(es[0].isIntersecting&&!document.hidden)).observe(box);
