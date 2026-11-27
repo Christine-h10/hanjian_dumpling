@@ -41,7 +41,7 @@
     .btn-outline{border:1px solid #bea58e;color:#533528;background:transparent}
     .btn-outline:hover{background:#f7f1e6}
     .btn-light{background:#fffcf7;color:#533528}
-    .hero-image{background:linear-gradient(90deg,rgba(27,19,15,.83) 0%,rgba(27,19,15,.59) 43%,rgba(27,19,15,.08) 100%),url('https://i.postimg.cc/j2YmMLV1/Chat-GPT-Image-2026nian8yue9ri-xia-wu06-20-57.png') center 52% / cover}
+    .hero-image{position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(27,19,15,.83) 0%,rgba(27,19,15,.59) 43%,rgba(27,19,15,.08) 100%),url('https://i.postimg.cc/j2YmMLV1/Chat-GPT-Image-2026nian8yue9ri-xia-wu06-20-57.png') center 52% / cover}
     .image-zoom{transition:transform .5s cubic-bezier(.2,.8,.2,1)}
     .image-card:hover .image-zoom{transform:scale(1.055)}
     .pattern{background-image:radial-gradient(#ad8b6c26 1px,transparent 1px);background-size:21px 21px}
@@ -57,6 +57,18 @@
     .faq-chevron{transition:transform .2s}
     .reveal{animation:reveal .35s ease both}
     @keyframes reveal{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+    .crowd{position:absolute;left:0;right:0;bottom:0;height:150px;z-index:5;pointer-events:none;overflow:hidden}
+    .crowd::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,transparent,rgba(240,188,135,.35),transparent)}
+    .walker{position:absolute;left:0;bottom:0;will-change:transform;animation:walk-x linear infinite}
+    .walker.rtl{animation-direction:reverse}
+    .walker svg{display:block;overflow:visible;animation:walk-bob .6s ease-in-out infinite}
+    .walker.rtl svg{transform:scaleX(-1)}
+    .walker .leg,.walker .arm{transform-box:fill-box;transform-origin:50% 0;animation:swing .6s ease-in-out infinite alternate}
+    .walker .leg.b,.walker .arm.b{animation-direction:alternate-reverse}
+    @keyframes walk-x{from{transform:translateX(-120px)}to{transform:translateX(calc(100vw + 120px))}}
+    @keyframes swing{from{transform:rotate(-24deg)}to{transform:rotate(24deg)}}
+    @keyframes walk-bob{0%,100%{translate:0 0}50%{translate:0 -3px}}
+    @media(prefers-reduced-motion:reduce){.crowd{display:none}}
     @media(max-width:767px){.hero-image{background:linear-gradient(90deg,rgba(27,19,15,.79),rgba(27,19,15,.35)),url('https://i.postimg.cc/j2YmMLV1/Chat-GPT-Image-2026nian8yue9ri-xia-wu06-20-57.png') center / cover}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
   </style>
@@ -84,7 +96,8 @@
 
   <main>
     <!-- HERO -->
-    <section class="hero-image relative min-h-[590px] md:min-h-[690px] flex items-center" aria-labelledby="hero-title">
+    <section class="hero-image relative overflow-hidden min-h-[590px] md:min-h-[690px] flex items-center" aria-labelledby="hero-title">
+      <div id="crowd" class="crowd" aria-hidden="true"></div>
       <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full py-24 relative z-10">
         <div class="max-w-[710px] text-white">
           <p class="text-[#f0bc87] tracking-[.29em] text-xs sm:text-sm font-semibold mb-6">THE ART OF GOLDEN CRISP</p>
@@ -331,6 +344,19 @@
       });
     }
     document.addEventListener('DOMContentLoaded',bkInit);
+
+    // ---- Hero crowd animation: silhouettes walking past in both directions ----
+    function initCrowd(){
+      const box=$('#crowd');if(!box||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+      const cols=['#1b130f','#2a1b14','#3a261b','#4a3022'],accents=['#dc7b43','#b95c35','#7d8566','#f0bc87'];
+      const n=innerWidth<768?9:16;
+      box.innerHTML=Array.from({length:n},(_,i)=>{
+        const depth=Math.random(),h=60+depth*60,dur=(26-depth*12+Math.random()*6).toFixed(1),delay=(-Math.random()*dur).toFixed(1);
+        const rtl=Math.random()<.5,col=cols[i%cols.length],acc=accents[Math.floor(Math.random()*accents.length)],bag=Math.random()<.45;
+        const lift=Math.round((1-depth)*26),op=(.5+depth*.45).toFixed(2),sp=(.45+Math.random()*.3).toFixed(2);
+        return `<div class="walker${rtl?' rtl':''}" style="animation-duration:${dur}s;animation-delay:${delay}s;bottom:${lift}px;opacity:${op}"><svg width="${h*.42}" height="${h}" viewBox="0 0 42 100" style="animation-duration:${sp}s" fill="${col}"><g style="--s:${sp}s"><rect class="leg a" x="14" y="56" width="7" height="42" rx="3.5" style="animation-duration:${sp}s"/><rect class="leg b" x="21" y="56" width="7" height="42" rx="3.5" style="animation-duration:${sp}s"/><rect x="10" y="26" width="22" height="36" rx="9"/><rect class="arm b" x="6" y="28" width="6" height="28" rx="3" style="animation-duration:${sp}s"/><rect class="arm a" x="30" y="28" width="6" height="28" rx="3" style="animation-duration:${sp}s"/><circle cx="21" cy="14" r="9"/>${bag?`<rect x="27" y="48" width="13" height="15" rx="3" fill="${acc}"/>`:''}</g></svg></div>`}).join('');
+    }
+    document.addEventListener('DOMContentLoaded',initCrowd);
   </script>
 </body>
 </html>
