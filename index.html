@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="和煎 HÉ JIĀN｜以每日新鮮現包的鍋貼，分享溫暖的日常好滋味。探索菜單、禮盒及門市。" />
   <meta name="theme-color" content="#f7f1e6" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="和煎" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>和煎 HÉ JIĀN｜一口金黃，剛好的幸福</title>
   <!-- Single-file demo: Tailwind, fonts, Lucide, images and map require internet connectivity. -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -492,6 +499,8 @@
       return true;
     }
     document.addEventListener('DOMContentLoaded',()=>{if(!initCrowd3D())initCrowd()});
+    // ---- PWA: register service worker (needs https or localhost) ----
+    if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
   </script>
 </body>
 </html>
