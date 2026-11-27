@@ -21,6 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     :root{color-scheme:light;--ink:#35251e;--terra:#b95c35}
     *,*::before,*::after{box-sizing:border-box}
@@ -77,6 +78,9 @@
     .reserve-arrow{margin-left:.5rem;opacity:.9}
     @media(min-width:768px){.reserve-btn{right:48px;bottom:36px}}
     @media(max-width:479px){.reserve-btn{left:20px;right:20px;justify-content:flex-start}.reserve-arrow{margin-left:auto}}
+    .crowd3d{position:absolute;left:0;right:0;bottom:0;height:230px;z-index:5;pointer-events:none}
+    .crowd3d canvas{display:block;width:100%;height:100%}
+    @media(min-width:768px){.crowd3d{height:320px}}
     @media(max-width:767px){.hero-image{background:linear-gradient(90deg,rgba(27,19,15,.79),rgba(27,19,15,.35)),url('https://i.postimg.cc/j2YmMLV1/Chat-GPT-Image-2026nian8yue9ri-xia-wu06-20-57.png') center / cover}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
   </style>
@@ -106,6 +110,7 @@
     <!-- HERO -->
     <section class="hero-image relative overflow-hidden min-h-[590px] md:min-h-[690px] flex items-center" aria-labelledby="hero-title">
       <div id="crowd" class="crowd" aria-hidden="true"></div>
+      <div id="crowd3d" class="crowd3d" aria-hidden="true"></div>
       <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full pt-24 pb-36 sm:pb-24 relative z-10">
         <div class="max-w-[710px] text-white">
           <p class="text-[#f0bc87] tracking-[.29em] text-xs sm:text-sm font-semibold mb-6">THE ART OF GOLDEN CRISP</p>
@@ -364,7 +369,96 @@
         const lift=Math.round((1-depth)*26),op=(.5+depth*.45).toFixed(2),sp=(.45+Math.random()*.3).toFixed(2);
         return `<div class="walker${rtl?' rtl':''}" style="animation-duration:${dur}s !important;animation-delay:${delay}s;bottom:${lift}px;opacity:${op}"><svg width="${h*.42}" height="${h}" viewBox="0 0 42 100" style="animation-duration:${sp}s !important" fill="${col}"><g style="--s:${sp}s"><rect class="leg a" x="14" y="56" width="7" height="42" rx="3.5" style="animation-duration:${sp}s !important"/><rect class="leg b" x="21" y="56" width="7" height="42" rx="3.5" style="animation-duration:${sp}s !important"/><rect x="10" y="26" width="22" height="36" rx="9"/><rect class="arm b" x="6" y="28" width="6" height="28" rx="3" style="animation-duration:${sp}s !important"/><rect class="arm a" x="30" y="28" width="6" height="28" rx="3" style="animation-duration:${sp}s !important"/><circle cx="21" cy="14" r="9"/>${bag?`<rect x="27" y="48" width="13" height="15" rx="3" fill="${acc}"/>`:''}</g></svg></div>`}).join('');
     }
-    document.addEventListener('DOMContentLoaded',initCrowd);
+
+    // ---- Hero 3D scene (Three.js): people walk past a storefront and some walk in / come out the door ----
+    function initCrowd3D(){
+      const box=$('#crowd3d');if(!box||!window.THREE)return false;
+      const T=THREE;let renderer;
+      try{renderer=new T.WebGLRenderer({antialias:true,alpha:true});}catch(e){return false}
+      renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.setClearColor(0x000000,0);
+      box.appendChild(renderer.domElement);
+      const scene=new T.Scene(),camera=new T.PerspectiveCamera(38,2,.1,100);
+      scene.add(new T.HemisphereLight(0xfff1de,0x3a2a20,.95));
+      const sun=new T.DirectionalLight(0xffe2bd,.75);sun.position.set(-6,10,12);scene.add(sun);
+      const doorLight=new T.PointLight(0xffb866,1.3,9,2);scene.add(doorLight);
+      const basic=(c,o={})=>new T.MeshBasicMaterial(Object.assign({color:c},o)),lam=c=>new T.MeshLambertMaterial({color:c});
+      const SHOP_W=7,SHOP_H=3.9;let shopX=0;const DOOR_Z=.9;
+      const shop=new T.Group();scene.add(shop);
+      const add=(geo,mat,x,y,z,parent=shop)=>{const m=new T.Mesh(geo,mat);m.position.set(x,y,z);parent.add(m);return m};
+      add(new T.BoxGeometry(SHOP_W,SHOP_H,3),lam(0xf0dcc0),0,SHOP_H/2,-1.5);
+      add(new T.BoxGeometry(SHOP_W+.3,.25,3.2),lam(0x533528),0,SHOP_H+.12,-1.5);
+      add(new T.BoxGeometry(1.5,2.3,.12),basic(0xffcf85),0,1.15,.02);            // glowing door
+      add(new T.BoxGeometry(1.8,2.5,.08),lam(0x533528),0,1.25,-.02);
+      [-2.3,2.3].forEach(x=>{add(new T.BoxGeometry(1.7,1.4,.1),basic(0xffe0a8,{transparent:true,opacity:.85}),x,1.75,.02);add(new T.BoxGeometry(1.9,1.6,.07),lam(0x533528),x,1.75,-.03)});
+      for(let i=0;i<7;i++){const a=add(new T.BoxGeometry(SHOP_W/7,.12,1.3),lam(i%2?0xfff4e4:0xb95c35),(i-3)*SHOP_W/7,2.95-.0,.65);a.rotation.x=.32}
+      const cv=document.createElement('canvas');cv.width=512;cv.height=160;const cx=cv.getContext('2d');
+      cx.fillStyle='#533528';cx.fillRect(0,0,512,160);cx.fillStyle='#f7f1e6';cx.font='700 84px "Noto Serif TC",serif';cx.textAlign='center';cx.textBaseline='middle';cx.fillText('和煎',256,70);cx.font='600 22px sans-serif';cx.fillText('HÉ JIĀN · DUMPLINGS',256,132);
+      add(new T.PlaneGeometry(3.4,1.06),new T.MeshBasicMaterial({map:new T.CanvasTexture(cv)}),0,SHOP_H-.02+.0,.05).position.y=3.45;
+      const ground=add(new T.PlaneGeometry(80,9),basic(0x1f140e,{transparent:true,opacity:.6}),0,0,2.2,scene);ground.rotation.x=-Math.PI/2;
+      const curb=add(new T.BoxGeometry(80,.12,.18),basic(0xdc9a62,{transparent:true,opacity:.55}),0,.06,6.5,scene);
+      // --- people ---
+      const SHIRTS=[0xdc7b43,0xb95c35,0x7d8566,0xf0bc87,0x6d8fa8,0xc2564f,0xe9d9b8,0x8a6a9a],SKIN=[0xf3c9a2,0xd9a578,0xa9744f,0x7a4d33],PANTS=[0x2a1b14,0x3a2a44,0x24343f,0x4a3022];
+      const pick=a=>a[Math.floor(Math.random()*a.length)];
+      function person(){
+        const m={shirt:lam(pick(SHIRTS)),skin:lam(pick(SKIN)),pants:lam(pick(PANTS))};Object.values(m).forEach(x=>x.transparent=true);
+        const g=new T.Group(),h=.92+Math.random()*.2;
+        const limb=(w,l,mat,x,y)=>{const geo=new T.BoxGeometry(w,l,w);geo.translate(0,-l/2,0);const mesh=new T.Mesh(geo,mat);mesh.position.set(x,y,0);g.add(mesh);return mesh};
+        const legL=limb(.17,.78,m.pants,-.12,.78),legR=limb(.17,.78,m.pants,.12,.78);
+        const torso=new T.Mesh(new T.CylinderGeometry(.27,.3,.78,10),m.shirt);torso.position.y=1.17;g.add(torso);
+        const armL=limb(.12,.64,m.shirt,-.36,1.5),armR=limb(.12,.64,m.shirt,.36,1.5);
+        const head=new T.Mesh(new T.SphereGeometry(.2,14,12),m.skin);head.position.y=1.74;g.add(head);
+        const hair=new T.Mesh(new T.SphereGeometry(.21,14,12,0,Math.PI*2,0,Math.PI*.55),lam(pick([0x1b130f,0x3a261b,0x5a3a22])));hair.position.y=1.76;hair.material.transparent=true;g.add(hair);
+        if(Math.random()<.45){const bag=new T.Mesh(new T.BoxGeometry(.3,.34,.12),lam(pick([0xdc7b43,0xfff4e4,0x7d8566])));bag.material.transparent=true;bag.position.set(.34,.7,.1);g.add(bag);m.bag=bag.material}
+        g.scale.setScalar(h);scene.add(g);
+        return {g,m,legL,legR,armL,armR,state:'walk',phase:Math.random()*6,speed:1,dir:1,lane:3,kind:'pass',t:0,fade:1};
+      }
+      const setFade=(p,v)=>{p.fade=v;[p.m.shirt,p.m.skin,p.m.pants,p.m.bag].forEach(x=>{if(x)x.opacity=v});p.g.visible=v>.01};
+      let halfW=14;
+      function spawn(p,first){
+        const r=Math.random();p.kind=r<.45?'visit':r<.7?'exit':'pass';p.speed=1.1+Math.random()*.9;p.lane=1.9+Math.random()*2.3;p.dir=Math.random()<.5?1:-1;
+        if(p.kind==='exit'){p.state='wait';p.t=first?Math.random()*6:Math.random()*3;p.g.visible=false;return}
+        p.state='walk';p.x=first?(-halfW+Math.random()*halfW*2):-p.dir*(halfW+1.5);p.z=p.lane;if(p.kind==='visit'&&first&&Math.abs(p.x-shopX)<1.5)p.x=-p.dir*(halfW-1);
+        p.g.position.set(p.x,0,p.z);setFade(p,1);
+      }
+      const people=Array.from({length:12},()=>{const p=person();spawn(p,true);return p});
+      const lerpAng=(a,b,k)=>{let d=((b-a+Math.PI*3)%(Math.PI*2))-Math.PI;return a+d*k};
+      function step(p,dt){
+        const g=p.g;p.phase+=dt*p.speed*4.2;const sw=Math.sin(p.phase),moving=p.state!=='wait'&&p.state!=='inside';
+        if(moving){p.legL.rotation.x=sw*.7;p.legR.rotation.x=-sw*.7;p.armL.rotation.x=-sw*.6;p.armR.rotation.x=sw*.6;g.position.y=Math.abs(Math.cos(p.phase))*.06}
+        if(p.state==='walk'){
+          const ty=p.dir>0?Math.PI/2:-Math.PI/2;g.rotation.y=lerpAng(g.rotation.y,ty,Math.min(1,dt*8));
+          p.x+=p.dir*p.speed*dt;g.position.x=p.x;g.position.z=p.z;
+          if(p.kind==='visit'&&((p.dir>0&&p.x>=shopX-.3)||(p.dir<0&&p.x<=shopX+.3)))p.state='toDoor';
+          else if(Math.abs(p.x)>halfW+2)spawn(p,false);
+        }else if(p.state==='toDoor'){
+          g.rotation.y=lerpAng(g.rotation.y,Math.PI,Math.min(1,dt*6));
+          p.x+=(shopX-p.x)*Math.min(1,dt*3);p.z-=p.speed*dt;g.position.set(p.x,g.position.y,p.z);
+          if(p.z<DOOR_Z+1.2)setFade(p,Math.max(0,(p.z-DOOR_Z)/1.2));
+          if(p.z<=DOOR_Z){p.state='inside';p.t=.8+Math.random()*3;setFade(p,0);p.kind='exit'}
+        }else if(p.state==='inside'||p.state==='wait'){
+          p.t-=dt;if(p.t<=0){p.state='out';p.x=shopX+(Math.random()-.5)*.5;p.z=DOOR_Z;g.rotation.y=0;g.position.set(p.x,0,p.z);setFade(p,0);p.dir=Math.random()<.5?1:-1}
+        }else if(p.state==='out'){
+          p.z+=p.speed*.8*dt;g.position.set(p.x,g.position.y,p.z);g.rotation.y=lerpAng(g.rotation.y,0,.2);setFade(p,Math.min(1,p.fade+dt*2.5));
+          if(p.z>=p.lane){p.kind='pass';p.state='walk'}
+        }
+      }
+      function resize(){
+        const w=box.clientWidth||1,h=box.clientHeight||1,asp=w/h;renderer.setSize(w,h,false);camera.aspect=asp;
+        const needH=6.4,needW=17,vis=Math.max(needH,needW/asp),dist=vis/(2*Math.tan(T.MathUtils.degToRad(camera.fov/2)));
+        halfW=Math.max(10,(vis*asp)/2+1);shopX=asp>2.6?Math.min(6,halfW*.25):0;shop.position.x=shopX;doorLight.position.set(shopX,1.6,2.2);
+        camera.position.set(shopX*.4,3.2,dist+1.5);camera.lookAt(shopX*.4,2.1,1.5);camera.updateProjectionMatrix();
+      }
+      new ResizeObserver(resize).observe(box);resize();
+      let last=performance.now(),running=true,raf=0;
+      function frame(now){raf=requestAnimationFrame(frame);const dt=Math.min(.05,(now-last)/1000);last=now;people.forEach(p=>step(p,dt));renderer.render(scene,camera)}
+      const setRun=on=>{if(on&&!running){running=true;last=performance.now();raf=requestAnimationFrame(frame)}else if(!on&&running){running=false;cancelAnimationFrame(raf)}};
+      raf=requestAnimationFrame(frame);
+      new IntersectionObserver(es=>setRun(es[0].isIntersecting&&!document.hidden)).observe(box);
+      document.addEventListener('visibilitychange',()=>setRun(!document.hidden));
+      const old=$('#crowd');if(old)old.remove();
+      return true;
+    }
+    document.addEventListener('DOMContentLoaded',()=>{if(!initCrowd3D())initCrowd()});
   </script>
 </body>
 </html>
