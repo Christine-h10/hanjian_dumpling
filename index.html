@@ -76,15 +76,17 @@
     @keyframes walk-x{from{transform:translateX(-120px)}to{transform:translateX(calc(100vw + 120px))}}
     @keyframes swing{from{transform:rotate(-24deg)}to{transform:rotate(24deg)}}
     @keyframes walk-bob{0%,100%{translate:0 0}50%{translate:0 -3px}}
-    .reserve-btn{position:absolute;z-index:20;right:20px;bottom:24px;display:flex;align-items:center;gap:.9rem;padding:.8rem 1.1rem .8rem .8rem;border-radius:22px;background:linear-gradient(135deg,#e88a4a,#d96a2f);color:#fff;box-shadow:0 14px 34px rgba(185,92,53,.45);transition:transform .2s,box-shadow .2s;min-height:56px}
+    .reserve-btn{position:relative;display:flex;align-items:center;gap:.9rem;padding:.8rem 1.1rem .8rem .8rem;border-radius:22px;background:linear-gradient(135deg,#e88a4a,#d96a2f);color:#fff;box-shadow:0 14px 34px rgba(185,92,53,.45);transition:transform .2s,box-shadow .2s,opacity .25s;min-height:56px}
+    #hero-reserve{position:fixed;z-index:45;right:20px;bottom:24px}
+    #hero-reserve.is-hidden{opacity:0;pointer-events:none;transform:translateY(12px)}
     .reserve-btn:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(185,92,53,.55)}
     .reserve-ico{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.2);flex:none}
     .reserve-txt{display:flex;flex-direction:column;line-height:1.25}
     .reserve-txt small{font-size:.62rem;letter-spacing:.2em;font-weight:700;color:rgba(255,255,255,.8)}
     .reserve-txt b{font-size:1.05rem;font-weight:800;letter-spacing:.05em}
     .reserve-arrow{margin-left:.5rem;opacity:.9}
-    @media(min-width:768px){.reserve-btn{right:48px;bottom:36px}}
-    @media(max-width:479px){.reserve-btn{left:20px;right:20px;justify-content:flex-start}.reserve-arrow{margin-left:auto}}
+    @media(min-width:768px){#hero-reserve{right:48px;bottom:36px}}
+    @media(max-width:479px){#hero-reserve{right:14px;bottom:16px;padding:.6rem .9rem .6rem .6rem;gap:.65rem;min-height:50px}#hero-reserve .reserve-arrow{display:none}}
     .crowd3d{position:absolute;left:0;right:0;bottom:0;height:230px;z-index:5;pointer-events:none}
     .crowd3d canvas{display:block;width:100%;height:100%}
     @media(min-width:768px){.crowd3d{height:320px}}
@@ -126,7 +128,6 @@
           <div class="flex flex-wrap gap-3 mt-10"><a class="btn btn-primary" href="#menu">線上點餐 <i data-lucide="arrow-right" class="w-4 h-4"></i></a><a class="btn border border-white/50 text-white hover:bg-white/15" href="#locations">探索門市 <i data-lucide="map-pin" class="w-4 h-4"></i></a></div>
         </div>
       </div>
-      <a id="hero-reserve" class="reserve-btn" href="https://calendar.app.google/brNiAEidbtCtgpFh6" target="_blank" rel="noopener noreferrer" aria-label="立即預約（開啟 Google 行事曆預約頁，另開新分頁）"><span class="reserve-ico"><i data-lucide="calendar-check" class="w-5 h-5"></i></span><span class="reserve-txt"><small>RESERVATION</small><b>立即預約</b></span><i data-lucide="arrow-up-right" class="w-4 h-4 reserve-arrow"></i></a>
     </section>
 
     <!-- BRAND STORY -->
@@ -189,6 +190,8 @@
   <!-- FOOTER -->
   <footer class="bg-[#302119] text-white/75 py-12"><div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12"><div class="flex flex-col md:flex-row md:justify-between gap-10"><div><p class="serif text-3xl text-cream tracking-[.2em] font-semibold">和煎</p><p class="text-xs tracking-[.2em] mt-2">HÉ JIĀN · DUMPLINGS</p><p class="max-w-[280px] text-sm leading-7 mt-5 text-white/55">有一種幸福，來自熱騰騰的好滋味。</p></div><div class="grid sm:grid-cols-2 gap-10 text-sm"><div><p class="text-cream font-semibold mb-4">快速連結</p><div class="flex flex-col gap-3"><a class="hover:text-white" href="#story">品牌故事</a><a class="hover:text-white" href="#menu">精選菜單</a><a class="hover:text-white" href="#gifts">冷凍禮盒</a><a class="hover:text-white" href="#locations">門市據點</a><a class="hover:text-white" href="#booking">線上預約</a><a class="hover:text-white" href="#faq">常見問題</a></div></div><div><p class="text-cream font-semibold mb-4">聯絡我們</p><p class="text-white/55 leading-7">示範品牌官方網站<br/>客服信箱：hello@example.com<br/>服務時間：週一至週五 10:00–18:00</p><div class="flex gap-3 mt-4"><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram 平台首頁（非官方帳號）" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-white/10"><i data-lucide="instagram" class="w-5 h-5"></i></a><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook 平台首頁（非官方帳號）" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-white/10"><i data-lucide="facebook" class="w-5 h-5"></i></a><a href="https://line.me/" target="_blank" rel="noopener noreferrer" aria-label="LINE 平台首頁（非官方帳號）" class="w-10 h-10 rounded-full border border-white/25 flex items-center justify-center hover:bg-white/10"><i data-lucide="message-circle" class="w-5 h-5"></i></a></div></div></div></div><div class="border-t border-white/15 mt-10 pt-6 flex flex-col sm:flex-row sm:justify-between gap-3 text-xs text-white/45"><p>© <span id="year"></span> HÉ JIĀN. All rights reserved. 本站為功能示範。</p><button id="privacy-btn" type="button" class="text-left hover:text-white">隱私權政策（示範）</button></div></div></footer>
 
+  <!-- 浮動預約按鈕：跟著畫面捲動，預約區塊出現時自動隱藏 -->
+  <a id="hero-reserve" class="reserve-btn" href="https://calendar.app.google/brNiAEidbtCtgpFh6" target="_blank" rel="noopener noreferrer" aria-label="立即預約（開啟 Google 行事曆預約頁，另開新分頁）"><span class="reserve-ico"><i data-lucide="calendar-check" class="w-5 h-5"></i></span><span class="reserve-txt"><small>RESERVATION</small><b>立即預約</b></span><i data-lucide="arrow-up-right" class="w-4 h-4 reserve-arrow"></i></a>
   <!-- CART DRAWER -->
   <div id="cart-overlay" class="drawer-overlay fixed inset-0 z-[60] hidden" aria-hidden="true"></div>
   <aside id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" tabindex="-1" class="cart-panel fixed z-[61] top-0 right-0 h-[100dvh] w-full sm:max-w-[440px] bg-paper flex flex-col translate-x-full transition-transform duration-300 invisible">
@@ -309,7 +312,7 @@
     function renderFaq(){$('#faq-list').innerHTML=FAQS.map(([q,a],i)=>`<div class="border-b border-[#e5d9cd]"><h3><button type="button" class="faq-trigger flex justify-between items-center gap-5 w-full text-left py-6 font-semibold" aria-expanded="false" aria-controls="faq-panel-${i}"><span>${esc(q)}</span>${icon('chevron-down','faq-chevron w-5 h-5 text-terra shrink-0')}</button></h3><div class="faq-panel" id="faq-panel-${i}"><div><p class="text-sm leading-8 text-[#806c60] pb-6">${esc(a)}</p></div></div></div>`).join('');refreshIcons()}
     // Event listeners / initialization.
     document.addEventListener('DOMContentLoaded',()=>{
-      $('#year').textContent=new Date().getFullYear();applyOrderMode();renderMenu();renderStore(0);renderFaq();updateCart();refreshIcons();
+      $('#year').textContent=new Date().getFullYear();applyOrderMode();(()=>{const fab=$('#hero-reserve'),zone=$('#booking');if(fab&&zone&&'IntersectionObserver' in window)new IntersectionObserver(es=>fab.classList.toggle('is-hidden',es[0].isIntersecting),{threshold:.15}).observe(zone)})();renderMenu();renderStore(0);renderFaq();updateCart();refreshIcons();
       $('#menu-tabs').addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(!b)return;activeCat=b.dataset.category;$$('#menu-tabs [role="tab"]').forEach(x=>x.setAttribute('aria-selected',String(x===b)));renderMenu()});
       $('#product-grid').addEventListener('click',e=>{const b=e.target.closest('.add-product');if(b)addToCart(b.dataset.id)});$('#add-gift').addEventListener('click',()=>addToCart('g1'));
       $('#open-cart').addEventListener('click',openCart);$('#close-cart').addEventListener('click',()=>closeCart());$('#cart-overlay').addEventListener('click',()=>closeCart());
