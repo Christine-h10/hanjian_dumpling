@@ -90,7 +90,7 @@ function doGet() {
 function doPost(e) {
   try {
     const body = JSON.parse((e && e.postData && e.postData.contents) || '{}');
-    if (body.website) return json_({ ok: true, orderNo: 'HJ-IGNORED' }); // 防機器人陷阱欄位
+    if (body.website) return json_({ ok: false, error: '訂單送出失敗，請重新整理頁面後再試一次。' }); // 防機器人陷阱欄位
 
     const order = validate_(body);
 
